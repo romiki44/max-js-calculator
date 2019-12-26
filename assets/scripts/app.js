@@ -22,36 +22,51 @@ function writeToLog(operation, prevResult, calcNumber, newResult) {
   console.log(logEntries);
 }
 
-function add() {
+function calculateResult(calculationType) {
+    if(
+        calculationType!='ADD' &&
+        calculationType!='SUB' &&
+        calculationType!='DIVIDE' &&
+        calculationType!='MULTIPLY'
+    ) {
+        return;
+    }
+
     const enteredNumnber=getUserInput();
     const initialResult=currentResult;
-    currentResult += enteredNumnber;
-    createAndWriteOutput('+', initialResult, enteredNumnber);
-    writeToLog('ADD', initialResult, enteredNumnber, currentResult);
+    let mathOperator;
+    if(calculationType=='ADD') {
+        currentResult += enteredNumnber;
+        mathOperator='+';
+    } else if(calculationType=='SUB') {
+        currentResult -=enteredNumnber;
+        mathOperator='-';
+    } else if(calculationType=='DIVIDE') {
+        currentResult /=enteredNumnber;
+        mathOperator='/';
+    } else if(calculationType=='MULTIPLY') {
+        currentResult *=enteredNumnber;
+        mathOperator='*';
+    }
+    
+    createAndWriteOutput(mathOperator, initialResult, enteredNumnber);
+    writeToLog(calculationType, initialResult, enteredNumnber, currentResult);
+}
+
+function add() {
+    calculateResult('ADD');
 }
 
 function subtract() {
-    const enteredNumnber=getUserInput();
-    const initialResult=currentResult;
-    currentResult -= enteredNumnber;
-    createAndWriteOutput('-', initialResult, enteredNumnber);
-    writeToLog('SUB', initialResult, enteredNumnber, currentResult);
+    calculateResult('SUB');
 }
 
 function divide() {
-    const enteredNumnber=getUserInput();
-    const initialResult=currentResult;
-    currentResult /= enteredNumnber;
-    createAndWriteOutput('/', initialResult, enteredNumnber);
-    writeToLog('DIVIDE', initialResult, enteredNumnber, currentResult);
+    calculateResult('DIVIDE');
 }
 
 function multiply() {
-    const enteredNumnber=getUserInput();
-    const initialResult=currentResult;
-    currentResult *= enteredNumnber;
-    createAndWriteOutput('*', initialResult, enteredNumnber);
-    writeToLog('MULTIPLY', initialResult, enteredNumnber, currentResult);
+    calculateResult('MULTIPLY');
 }
 
 addBtn.addEventListener('click', add);
